@@ -10,15 +10,31 @@ using Bookify.Infrastructure.Clock;
 using Bookify.Infrastructure.Data.Queries.Apartments;
 using Bookify.Infrastructure.Data.Queries.Bookings;
 using Bookify.Infrastructure.Email;
+using Bookify.Infrastructure.Outbox;
 using Bookify.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Quartz;
 
 namespace Bookify.Infrastructure;
 
 public static class DependencyInjection
 {
+    #region Private Methods
+
+    private static void AddBackgroundJobs(IServiceCollection services, IConfiguration configuration)
+    {
+        services.Configure<OutboxOptions>(configuration.GetSection("Outbox"));
+
+        // Quartz background jobs
+        services.AddQuartz();
+        services.AddQuartzHostedService(o => o.WaitForJobsToComplete = true);
+        services.ConfigureOptions<ProcessOutboxMessagesJobSetup>();
+    }
+
+    #endregion
+
     #region Public Methods
 
     public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
@@ -43,6 +59,8 @@ public static class DependencyInjection
         // DbQueries
         services.AddScoped<ISearchApartmentsDbQuery, SearchApartmentsDbQuery>();
         services.AddScoped<IGetBookingDbQuery, GetBookingsDbQuery>();
+
+        AddBackgroundJobs(services, configuration);
     }
 
     #endregion

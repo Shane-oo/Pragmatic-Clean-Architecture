@@ -15,7 +15,15 @@ internal sealed class BookingConfiguration: IEntityTypeConfiguration<Booking>
         
         builder.Property(b => b.Id)
                .HasConversion(id => id.Value, value => new BookingId(value));
-        
+
+
+        builder.Property(u => u.UserId)
+               .HasConversion(id => id.Value, value => new UserId(value));
+
+
+        builder.Property(u => u.ApartmentId)
+               .HasConversion(id => id.Value, value => new ApartmentId(value));
+
         builder.OwnsOne(b => b.PriceForPeriod, priceBuilder =>
                                                {
                                                    priceBuilder.Property(m => m.Currency)
