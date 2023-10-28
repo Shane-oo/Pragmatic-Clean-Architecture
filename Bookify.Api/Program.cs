@@ -18,12 +18,18 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    
+
     // Run ef core migrations
     app.ApplyMigrations();
 }
+else
+{
+    app.UseHttpsRedirection();
+}
 
-app.UseHttpsRedirection();
+
+
+app.UseCustomExceptionHandler();
 
 app.MapControllers();
 

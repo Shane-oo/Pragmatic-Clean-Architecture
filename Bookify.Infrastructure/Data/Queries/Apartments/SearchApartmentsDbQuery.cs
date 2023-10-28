@@ -28,16 +28,16 @@ public class SearchApartmentsDbQuery: ISearchApartmentsDbQuery
 
     #region Public Methods
 
-    public Task<List<Apartment>> ExecuteAsync(CancellationToken cancellationToken = default)
+    public async Task<List<Apartment>> ExecuteAsync(CancellationToken cancellationToken = default)
     {
         //var query = _dbContext.Apartments.Where(a=>a.StartDate >= _startDate && a.EndDate <= _endDate));
-        
+
         //if(_asNoTracking){
         //query = query.AsNoTracking();
         //}
         //return await query.ToListAsync();
 
-        return null;
+        return new List<Apartment> { new(new Guid()) };
     }
 
     public ISearchApartmentsDbQuery WithNoTracking()

@@ -1,5 +1,9 @@
 using Bookify.Application.Exceptions;
 using Bookify.Domain.Abstractions;
+using Bookify.Domain.Apartments;
+using Bookify.Domain.Bookings;
+using Bookify.Domain.Reviews;
+using Bookify.Domain.Users;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,6 +14,18 @@ public sealed class ApplicationDbContext: DbContext, IUnitOfWork
     #region Fields
 
     private readonly IPublisher _publisher;
+
+    #endregion
+
+    #region Properties
+
+    public DbSet<Apartment> Apartments { get; set; }
+
+    public DbSet<Booking> Bookings { get; set; }
+
+    //public DbSet<Review> Reviews { get; set; }
+
+    public DbSet<User> Users { get; set; }
 
     #endregion
 

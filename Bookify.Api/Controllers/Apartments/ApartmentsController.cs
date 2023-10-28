@@ -26,7 +26,7 @@ public class ApartmentsController: ControllerBase
     #region Public Methods
 
     [HttpGet]
-    public async Task<IActionResult> SearchApartments(SearchApartmentsQuery query, CancellationToken cancellationToken)
+    public async Task<IActionResult> SearchApartments([FromQuery] SearchApartmentsQuery query, CancellationToken cancellationToken)
     {
         var result = await _sender.Send(query, cancellationToken);
 

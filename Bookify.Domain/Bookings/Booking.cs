@@ -13,6 +13,7 @@ public sealed class Booking: Entity
     public Money AmenitiesUpCharge { get; private set; }
 
     public Apartment Apartment { get; private set; }
+
     public Guid ApartmentId { get; private set; }
 
     public DateTime? CancelledOnUtc { get; private set; }
@@ -36,6 +37,7 @@ public sealed class Booking: Entity
     public Money TotalPrice { get; private set; }
 
     public User User { get; private set; }
+
     public Guid UserId { get; private set; }
 
     #endregion
@@ -53,7 +55,7 @@ public sealed class Booking: Entity
                     BookingStatus status,
                     DateTime createdOnUtc): base(id)
     {
-        ApartmentId = id;
+        ApartmentId = apartmentId;
         UserId = userId;
         Duration = duration;
         PriceForPeriod = priceForPeriod;
@@ -63,8 +65,10 @@ public sealed class Booking: Entity
         Status = status;
         CreatedOnUtc = createdOnUtc;
     }
-    
-    private Booking(){}
+
+    private Booking()
+    {
+    }
 
     #endregion
 

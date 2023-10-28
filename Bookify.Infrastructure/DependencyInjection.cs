@@ -21,7 +21,7 @@ public static class DependencyInjection
 {
     #region Public Methods
 
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddTransient<IDateTimeProvider, DateTimeProvider>();
 
@@ -43,8 +43,6 @@ public static class DependencyInjection
         // DbQueries
         services.AddScoped<ISearchApartmentsDbQuery, SearchApartmentsDbQuery>();
         services.AddScoped<IGetBookingDbQuery, GetBookingsDbQuery>();
-
-        return services;
     }
 
     #endregion

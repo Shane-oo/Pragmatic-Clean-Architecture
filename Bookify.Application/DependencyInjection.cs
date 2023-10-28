@@ -9,7 +9,7 @@ public static class DependencyInjection
 {
     #region Public Methods
 
-    public static IServiceCollection AddApplication(this IServiceCollection services)
+    public static void AddApplication(this IServiceCollection services)
     {
         var assembly = typeof(DependencyInjection).Assembly;
         services.AddMediatR(configuration =>
@@ -25,8 +25,6 @@ public static class DependencyInjection
         services.AddValidatorsFromAssembly(assembly);
 
         services.AddTransient<PricingService>();
-
-        return services;
     }
 
     #endregion
