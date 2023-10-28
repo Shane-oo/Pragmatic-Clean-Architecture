@@ -4,11 +4,11 @@ using Bookify.Domain.Shared;
 
 namespace Bookify.Domain.Apartments;
 
-public sealed class Apartment: Entity
+public sealed class Apartment: Entity<ApartmentId>
 {
     #region Properties
 
-    public Apartment(Guid id, Name name, Description description, Address address, Money price, Money cleaningFee, DateTime? lastBookedOnUtc): base(id)
+    public Apartment(ApartmentId id, Name name, Description description, Address address, Money price, Money cleaningFee, DateTime? lastBookedOnUtc): base(id)
     {
         Name = name;
         Description = description;
@@ -42,7 +42,7 @@ public sealed class Apartment: Entity
 
     #region Construction
 
-    public Apartment(Guid id): base(id)
+    public Apartment(ApartmentId id): base(id)
     {
     }
 

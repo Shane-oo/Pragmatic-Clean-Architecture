@@ -12,7 +12,10 @@ internal sealed class BookingConfiguration: IEntityTypeConfiguration<Booking>
     public void Configure(EntityTypeBuilder<Booking> builder)
     {
         builder.HasKey(b => b.Id);
-
+        
+        builder.Property(b => b.Id)
+               .HasConversion(id => id.Value, value => new BookingId(value));
+        
         builder.OwnsOne(b => b.PriceForPeriod, priceBuilder =>
                                                {
                                                    priceBuilder.Property(m => m.Currency)

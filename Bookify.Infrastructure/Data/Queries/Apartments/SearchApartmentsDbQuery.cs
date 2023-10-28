@@ -37,7 +37,7 @@ public class SearchApartmentsDbQuery: ISearchApartmentsDbQuery
         //}
         //return await query.ToListAsync();
 
-        return new List<Apartment> { new(new Guid()) };
+        return new List<Apartment> { new(ApartmentId.New()) };
     }
 
     public ISearchApartmentsDbQuery WithNoTracking()

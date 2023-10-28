@@ -12,6 +12,9 @@ internal sealed class UserConfiguration: IEntityTypeConfiguration<User>
     {
         builder.HasKey(u => u.Id);
 
+        builder.Property(u => u.Id)
+               .HasConversion(id => id.Value, value => new UserId(value));
+
         builder.Property(u => u.FirstName)
                .HasMaxLength(200)
                .HasConversion(firstName => firstName.Value, value => new FirstName(value));
@@ -28,7 +31,7 @@ internal sealed class UserConfiguration: IEntityTypeConfiguration<User>
         builder.HasMany(u => u.Bookings)
                .WithOne(b => b.User)
                .HasForeignKey(b => b.UserId);
-        
+
         builder.HasIndex(u => u.Email).IsUnique();
     }
 

@@ -6,7 +6,7 @@ using Bookify.Domain.Users;
 
 namespace Bookify.Domain.Bookings;
 
-public sealed class Booking: Entity
+public sealed class Booking: Entity<BookingId>
 {
     #region Properties
 
@@ -14,7 +14,7 @@ public sealed class Booking: Entity
 
     public Apartment Apartment { get; private set; }
 
-    public Guid ApartmentId { get; private set; }
+    public ApartmentId ApartmentId { get; private set; }
 
     public DateTime? CancelledOnUtc { get; private set; }
 
@@ -38,15 +38,15 @@ public sealed class Booking: Entity
 
     public User User { get; private set; }
 
-    public Guid UserId { get; private set; }
+    public UserId UserId { get; private set; }
 
     #endregion
 
     #region Construction
 
-    private Booking(Guid id,
-                    Guid apartmentId,
-                    Guid userId,
+    private Booking(BookingId id,
+                    ApartmentId apartmentId,
+                    UserId userId,
                     DateRange duration,
                     Money priceForPeriod,
                     Money cleaningFee,
@@ -74,11 +74,11 @@ public sealed class Booking: Entity
 
     #region Public Methods
 
-    public static Booking Reserve(Apartment apartment, Guid userId, DateRange duration, DateTime utcNow, PricingService pricingService)
+    public static Booking Reserve(Apartment apartment, UserId userId, DateRange duration, DateTime utcNow, PricingService pricingService)
     {
         var pricingDetails = pricingService.CalculatePrice(apartment, duration);
 
-        var booking = new Booking(Guid.NewGuid(),
+        var booking = new Booking(BookingId.New(),
                                   apartment.Id,
                                   userId,
                                   duration,

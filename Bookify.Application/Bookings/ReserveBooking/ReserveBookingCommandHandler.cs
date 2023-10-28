@@ -44,14 +44,14 @@ internal sealed class ReserveBookingCommandHandler: ICommandHandler<ReserveBooki
 
     public async Task<Result<Guid>> Handle(ReserveBookingCommand command, CancellationToken cancellationToken)
     {
-        var user = await _userRepository.GetByIdAsync(command.UserId, cancellationToken);
+        var user = await _userRepository.GetByIdAsync(new UserId(command.UserId), cancellationToken);
 
         if (user == null)
         {
             return Result.Failure<Guid>(UserErrors.NotFound);
         }
 
-        var apartment = await _apartmentRepository.GetByIdAsync(command.ApartmentId, cancellationToken);
+        var apartment = await _apartmentRepository.GetByIdAsync(new ApartmentId(command.ApartmentId), cancellationToken);
 
         if (apartment == null)
         {
@@ -68,7 +68,7 @@ internal sealed class ReserveBookingCommandHandler: ICommandHandler<ReserveBooki
         try
         {
             var booking = Booking.Reserve(apartment,
-                                          user.Id,
+                                          new UserId(command.UserId),
                                           duration,
                                           _dateTimeProvider.UtcNow,
                                           _pricingService);
@@ -77,7 +77,7 @@ internal sealed class ReserveBookingCommandHandler: ICommandHandler<ReserveBooki
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return booking.Id;
+            return booking.Id.Value;
         }
         catch(ConcurrencyException)
         {

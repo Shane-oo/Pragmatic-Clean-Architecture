@@ -1,6 +1,6 @@
 namespace Bookify.Domain.Abstractions;
 
-public abstract class Entity
+public abstract class Entity<TEntityId>: IEntity
 {
     #region Fields
 
@@ -10,20 +10,19 @@ public abstract class Entity
 
     #region Properties
 
-    public Guid Id { get; init; }
+    public TEntityId Id { get; init; }
 
     #endregion
 
     #region Construction
 
-    protected Entity(Guid id)
+    protected Entity(TEntityId id)
     {
         Id = id;
     }
 
     protected Entity()
     {
-        
     }
 
     #endregion
